@@ -23,6 +23,8 @@ class Laravel implements BootstrapInterface, HooksInterface, RequestClassProvide
      * @var \Symfony\Component\HttpKernel\HttpKernelInterface
      */
     protected $app;
+    
+    protected $threadResetCallback = [];
 
     /**
      * Instantiate the bootstrap, storing the $appenv
@@ -73,6 +75,10 @@ class Laravel implements BootstrapInterface, HooksInterface, RequestClassProvide
 
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
 
+        if (file_exists('threadresetcallback.php')) {
+            $this->threadResetCallback = require_once 'threadresetcallback.php';
+        }
+        
         return $kernel;
     }
 
@@ -81,6 +87,9 @@ class Laravel implements BootstrapInterface, HooksInterface, RequestClassProvide
      */
     public function preHandle($app)
     {
+        foreach ($this->threadResetCallback as $callback) {
+            $callback();
+        }
         //reset const LARAVEL_START, to get the correct timing
     }
 
