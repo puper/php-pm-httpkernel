@@ -1,9 +1,9 @@
 {
-    "name": "php-pm/httpkernel-adapter",
+    "name": "puper/httpkernel-adapter",
     "require": {
         "symfony/http-foundation": "^2.6|^3.0",
         "symfony/http-kernel": "^2.6|^3.0",
-        "php-pm/php-pm": "dev-master"
+        "puper/php-pm": "dev-master"
     },
     "autoload": {
         "psr-4": {
